@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+<meta name="color-scheme" content="dark" />
+<script src="../comum/escuro-forcado.js"></script>
+<title>✧ Primeiro Encontro ✧</title>
+<!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+<link rel="icon" href="../comum/icone.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="../comum/icone-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<!-- Base visual compartilhada: reset, gradiente, estrelas, navegação, corações -->
+<link rel="stylesheet" href="../comum/estilo.css">
+<!-- Estilos únicos desta página -->
+<link rel="stylesheet" href="primeiro-encontro.css">
+</head>
+<body id="page-body" class="com-frase">
+
+<nav class="top-nav glass">
+  <a href="../index.html" class="back-link">
+    <span class="back-icon">←</span> Voltar
+  </a>
+  <div class="acoes-topo">
+    <span id="dias" class="contador"></span>
+  </div>
+</nav>
+
+<!-- A noite, o caminho, a luz e o coração são desenhados aqui (js/ceu.js) -->
+<canvas id="ceu" class="ceu" aria-hidden="true"></canvas>
+
+<!-- Começa com a abertura (e o fundo já escurecido para ela, .com-frase no
+     body); depois cada frase surge aqui, por cima do caminho -->
+<div id="mensagem" class="mensagem visivel" aria-live="polite">
+  <div class="typography-reveal">
+    <h1 id="frase" class="titulo-brilho">Onde tudo começou...</h1>
+    <p id="frase-sub" class="frase-sub" hidden></p>
+    <div class="decor-line"></div>
+    <p id="aviso" class="aviso-toque">Dê um toque na tela para começar</p>
+  </div>
+</div>
+
+<!-- Script global de interação -->
+<script type="module" src="../comum/toque.js"></script>
+<!-- Script local: o caminho da noite e o coração -->
+<script type="module" src="primeiro-encontro.js"></script>
+</body>
+</html>

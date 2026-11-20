@@ -1,0 +1,293 @@
+/* ================================================================
+   Volta-ao-Mundo/volta-ao-mundo.css — Identidade Visual: Volta ao Mundo ❤️
+   Importa ../comum/estilo.css pela tag HTML. Aqui ficam apenas os estilos
+   únicos desta página; o canvas (.ceu), o título (.titulo-brilho) e
+   o aviso de toque (.aviso-toque) são os de ../comum/estilo.css.
+   ================================================================ */
+
+/* --- Identidade de cor desta página --- */
+:root {
+  --page-accent: #d946ef;  /* magenta vibrante — amor em mil idiomas */
+}
+
+/* A página é uma tela só, sem rolagem */
+body {
+  overflow: hidden;
+  /* No iPhone, sem a mãozinha o toque fora do globo não gera "click" e
+     o idioma não avança */
+  cursor: pointer;
+  /* Arrastar gira o globo ou leva o coração: sem rolar nem dar zoom */
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;   /* sem o realce cinza a cada toque */
+}
+
+/* Em cima do globo: a mão de arrastar */
+body.sobre-globo {
+  cursor: grab;
+}
+
+/* Sobre um país com língua: a mãozinha de "dá para tocar aqui" */
+body.apontando {
+  cursor: pointer;
+}
+
+body.arrastando {
+  cursor: grabbing;
+}
+
+/* O fundo é o globo: sem a grade de estrelas das outras páginas. O
+   degradê fica, desfocado atrás do header de vidro */
+body::after {
+  display: none;
+}
+
+/* Onde o globo cabe (js/globo.js mede): em pé, em cima, com o texto
+   embaixo; deitado, à esquerda, com o texto à direita. Os 58% e os 50%
+   são os mesmos do .content-viewport */
+.lugar-globo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 58vh;
+  height: 58dvh;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* --- Conteúdo Principal --- */
+.content-viewport {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;    /* altura visível no celular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 4rem);
+  /* Em pé, o texto fica embaixo do globo */
+  padding-top: 58vh;
+  padding-top: 58dvh;
+}
+
+/* Deitado (e no computador), o globo à esquerda e o texto à direita */
+@media (min-aspect-ratio: 11/10) {
+  .lugar-globo {
+    width: 50%;
+    height: 100%;
+  }
+  .content-viewport {
+    padding-top: calc(max(3.75rem, 8vh) + 1rem);
+    padding-left: 50vw;
+  }
+}
+
+/* --- Abertura (a mesma do Encontro) ---
+   Sem caixa atrás: quem escurece é o globo (.com-frase). Enquanto ela
+   está na tela, o texto do idioma fica escondido e sem toque */
+/* Mais escuro que os 0.35 das outras: o globo é claro e cheio de
+   linhas brancas, e com 0.35 ainda chamava mais atenção que o fundo
+   delas */
+.com-frase .ceu {
+  filter: brightness(0.2);
+}
+
+/* O brilho roxo do fundo (body::before, de ../comum/estilo.css) fica fora do
+   canvas: escurece junto, senão a abertura fica mais clara que nas
+   outras páginas, onde o fundo inteiro é canvas */
+body::before {
+  transition: filter 0.8s ease;
+}
+
+body.com-frase::before {
+  filter: blur(10vmin) brightness(0.2);
+}
+
+.abertura {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem clamp(1rem, 5vw, 4rem);
+  padding-top: calc(max(3.75rem, 8vh) + 1rem);   /* abaixo da barra fixa */
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0.8s;
+}
+
+.abertura.visivel {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s;
+}
+
+.abertura .typography-reveal {
+  max-width: min(900px, 90vw);
+}
+
+.abertura .titulo-brilho {
+  margin-bottom: 1.5rem;
+}
+
+/* O idioma surge depois que a abertura some: espera os 0.8s dela */
+.content-viewport {
+  transition: opacity 0.8s ease 0.8s, visibility 0s 0.8s;
+}
+
+.com-frase .content-viewport {
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+}
+
+.love-stage {
+  width: 100%;
+  max-width: min(900px, 90vw);
+}
+
+.typography-reveal {
+  text-align: center;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes loadFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#frase {
+  margin-bottom: 1.5rem;
+}
+
+/* Troca de idioma (volta-ao-mundo.js): some em 0.3s e o novo surge crescendo
+   em 0.8s, como o elogio na Constelação */
+.troca {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.troca.trocando {
+  opacity: 0;
+  transform: scale(0.95);
+  transition-duration: 0.3s;
+}
+
+.decor-line {
+  width: min(3.75rem, 15vw);
+  height: 0.2rem;
+  background: var(--page-accent);
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0.625rem var(--page-accent);
+}
+
+/* Como se fala. Altura fixa: no português ela fica vazia, e o idioma
+   embaixo não sobe e desce ao passar por ele */
+.pronuncia {
+  min-height: 1.4em;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--page-accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.idioma {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 300;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  /* Recua o espaçamento extra da última letra, para centrar de verdade */
+  margin-right: -0.4em;
+  margin-bottom: 2.5rem;
+}
+
+/* --- Painel de Configurações Deslizante (o mesmo dos Corações) --- */
+.settings-panel {
+  position: fixed;
+  top: clamp(5rem, 12vh, 6rem);
+  right: clamp(1rem, 3vw, 2rem);
+  width: min(17.5rem, 90vw);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: 2rem;
+  /* Começa oculto fora da tela (à direita) */
+  transform: translateX(calc(100% + 3rem));
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 1.5rem 3.125rem -0.75rem rgba(0, 0, 0, 0.5);
+  overflow-y: auto;      /* celular deitado: o painel pode ser mais alto que a tela */
+}
+
+/* Painel aberto — desliza para dentro da tela. Fechado, fica fora do
+   Tab (inert, js/painel.js) */
+.settings-panel.open {
+  transform: translateX(0);
+}
+
+.settings-panel h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.style-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Botões de opção dentro do painel */
+.style-btn {
+  padding: 0.8rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  border-radius: 1rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* Estado ativo do botão selecionado */
+.style-btn.active {
+  background: color-mix(in srgb, var(--page-accent) 12%, transparent);
+  border-color: var(--page-accent);
+  color: #fff;
+}
+
+.style-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 48em) {
+  .top-nav { padding: 0 1rem; }
+  .idioma  { font-size: 1rem; }
+}
+
+/* Celular deitado: pouca altura abaixo da barra — aperta os espaçamentos */
+@media (max-height: 30em) {
+  #frase      { margin-bottom: 1rem; }
+  .decor-line { margin-bottom: 1rem; }
+  .idioma     { margin-bottom: 1.25rem; }
+}

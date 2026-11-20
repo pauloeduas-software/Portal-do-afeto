@@ -1,0 +1,258 @@
+/* ================================================================
+   Chuva-de-Coracoes/chuva-de-coracoes.css — Identidade Visual: Chuva de Corações 💖
+   Importa ../comum/estilo.css pela tag HTML. Aqui ficam apenas os estilos
+   únicos desta página; o céu (.ceu), o título (.titulo-brilho) e o
+   aviso de toque (.aviso-toque) são os de ../comum/estilo.css.
+   ================================================================ */
+
+/* --- Identidade de cor desta página --- */
+:root {
+  --page-accent:     #ec4899;  /* rosa vibrante — a cor do amor */
+}
+
+/* A página é uma tela só, sem rolagem */
+body {
+  overflow: hidden;
+  /* No iPhone, sem a mãozinha o toque fora dos botões não gera "click"
+     e a mensagem inicial não some */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;   /* sem o realce cinza a cada toque */
+}
+
+/* Aqui o fundo é o céu de nuvens do canvas: sem o gradiente e a grade
+   de estrelas que as outras páginas usam */
+body::before,
+body::after {
+  display: none;
+}
+
+/* --- Mensagem Central (Tela de Início) ---
+   A abertura do Encontro: o céu escurecido atrás (.com-frase no body)
+   e o primeiro toque só começa a página */
+.hero-msg {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 4rem);
+  padding-top: calc(max(3.75rem, 8vh) + 1rem);   /* abaixo da barra fixa */
+  pointer-events: none;   /* não captura cliques */
+  z-index: 1;
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s;
+}
+
+/* Primeiro toque: a mensagem some devagar, como a frase do Encontro.
+   Escondida, sai também do leitor de tela (visibility) */
+.hero-msg.escondida {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0.8s;
+}
+
+.typography-reveal {
+  text-align: center;
+  width: 100%;
+  max-width: min(900px, 90vw);
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes loadFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título da tela de início e frase da pilha (.titulo-brilho) */
+.hero-msg h1,
+.frase-texto {
+  margin-bottom: 1.5rem;
+}
+
+.decor-line {
+  width: min(3.75rem, 15vw);
+  height: 0.2rem;
+  background: var(--page-accent);
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0.625rem var(--page-accent);
+}
+
+
+/* --- Palco da chuva --- */
+/* Canvas da tela inteira onde a chuva, a pilha e o coração grande são
+   desenhados. Fica abaixo da nav (100) e do painel (90) */
+.palco {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  transition: filter 0.8s ease;
+}
+
+/* Frase na tela: a pilha e o céu escurecem para o texto aparecer */
+.com-frase .ceu,
+.com-frase .palco {
+  filter: brightness(0.35);
+}
+
+/* Coração grande formado: o canvas inteiro pulsa (js/palco.js) */
+.palco.pulsando {
+  animation: palcoPulsa 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes palcoPulsa {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* --- Frase quando a pilha enche --- */
+/* No meio da tela, solta por cima da pilha. Para ler, quem escurece são
+   os corações (.com-frase), não uma caixa atrás do texto. Escondida,
+   sai também do leitor de tela (visibility) */
+.frase-pilha {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 44rem);
+  padding: 0 1rem;
+  transform: translate(-50%, -50%) scale(0.95);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0.8s;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.frase-pilha.visivel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s;
+}
+
+/* Coração grande formado: o aviso fica embaixo, longe do coração
+   (js/coracao-grande.js deixa o espaço dele). Quem aparece e some é a
+   caixa; o texto dentro pulsa */
+.aviso-explodir {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  padding: 0 1rem;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0s 0.8s;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.aviso-explodir .aviso-toque {
+  display: block;
+}
+
+.aviso-explodir.visivel {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s ease 0.5s, visibility 0s 0.5s;
+}
+
+/* --- Painel de Configurações Deslizante --- */
+.settings-panel {
+  position: fixed;
+  top: clamp(5rem, 12vh, 6rem);
+  right: clamp(1rem, 3vw, 2rem);
+  width: min(17.5rem, 90vw);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: 2rem;
+  /* Começa oculto fora da tela (à direita) */
+  transform: translateX(calc(100% + 3rem));
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 1.5rem 3.125rem -0.75rem rgba(0, 0, 0, 0.5);
+  overflow-y: auto;      /* celular deitado: o painel pode ser mais alto que a tela */
+}
+
+/* Painel aberto — desliza para dentro da tela. Fechado, fica fora do
+   Tab (inert, js/painel.js) */
+.settings-panel.open {
+  transform: translateX(0);
+}
+
+.settings-panel h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+/* --- Seletor de Estilo de Coração --- */
+.style-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Botões de opção dentro do painel */
+.style-btn {
+  padding: 0.8rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  border-radius: 1rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* Estado ativo do botão selecionado */
+.style-btn.active {
+  background: color-mix(in srgb, var(--page-accent) 12%, transparent);
+  border-color: var(--page-accent);
+  color: #fff;
+}
+
+.style-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 48em) {
+  .top-nav { padding: 0 1rem; }
+}
+
+/* Celular deitado: pouca altura abaixo da barra — aperta os espaçamentos */
+@media (max-height: 30em) {
+  .hero-msg h1,
+  .frase-texto { margin-bottom: 1rem; }
+  .decor-line  { margin-bottom: 1rem; }
+}
+
+/* Tela estreita: "Voltar" e os dois botões com texto não cabem numa linha.
+   Os botões ficam só com o ícone; o texto continua para leitor de tela */
+@media (max-width: 40em) {
+  .settings-btn .rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .settings-btn { padding: 0.6rem 0.9rem; }
+}

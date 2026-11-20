@@ -1,0 +1,245 @@
+/* ================================================================
+   inicio.css — Página Inicial · Portal do Afeto ✧
+   Importa comum/estilo.css pela tag HTML. Aqui ficam apenas os estilos
+   únicos da home; o fundo (.ceu) e o título (.titulo-brilho) são os
+   de comum/estilo.css.
+   ================================================================ */
+
+/* --- Identidade de cor ---
+   A home é de todas as páginas: cada portal leva a cor da sua, e o
+   fundo (inicio.js) gira um braço de redemoinho de cada uma */
+:root {
+  --page-accent:  #a855f7;
+  --cor-primeiro-encontro:  #f97316;
+  --cor-chuva-de-coracoes:  #ec4899;
+  --cor-constelacao:        #06b6d4;
+  --cor-volta-ao-mundo:     #d946ef;
+  --cor-um-pedido:          #a855f7;
+  /* Cada coração do toque sai numa delas (comum/efeitos-toque.js) */
+  --cores-do-toque: var(--cor-primeiro-encontro), var(--cor-chuva-de-coracoes),
+                    var(--cor-constelacao), var(--cor-volta-ao-mundo),
+                    var(--cor-um-pedido);
+}
+
+/* Aqui o fundo é o redemoinho do canvas: sem o gradiente e a grade
+   antigos */
+body::before,
+body::after {
+  display: none;
+}
+
+/* --- Conteúdo ---
+   No celular, uma coluna que cabe na tela; rola só se não couber */
+.inicio {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 64rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vh, 4rem) 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  gap: clamp(1.5rem, 5vh, 3rem);
+}
+
+/* --- Título ---
+   Entra como nas outras páginas; os portais vêm logo depois */
+.abertura {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.abertura .titulo-brilho {
+  font-size: clamp(2.25rem, min(10vw, 12vh), 4.5rem);
+  margin-bottom: 1rem;
+}
+
+.decor-line {
+  width: min(3.75rem, 15vw);
+  height: 0.2rem;
+  background: var(--page-accent);
+  margin: 0 auto 1rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0.625rem var(--page-accent);
+}
+
+.convite {
+  color: var(--text-dim);
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  line-height: 1.5;
+  max-width: 24rem;
+  text-wrap: balance;
+  margin: 0 auto;
+}
+
+@keyframes loadFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Portais ---
+   Celular: um embaixo do outro. Mais largo ou deitado: duas colunas,
+   e três no computador; o Encontro, onde tudo começou, ocupa duas */
+.portais {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+}
+
+.portal-primeiro-encontro { --page-accent: var(--cor-primeiro-encontro); }
+.portal-chuva-de-coracoes { --page-accent: var(--cor-chuva-de-coracoes); }
+.portal-constelacao       { --page-accent: var(--cor-constelacao); }
+.portal-volta-ao-mundo    { --page-accent: var(--cor-volta-ao-mundo); }
+.portal-um-pedido         { --page-accent: var(--cor-um-pedido); }
+
+.portal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4.75rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 1.25rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  color: var(--text-main);
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Brilho da cor do portal no canto, aceso ao passar ou focar */
+.portal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--page-accent) 22%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.portal:hover,
+.portal:focus-visible {
+  border-color: color-mix(in srgb, var(--page-accent) 60%, transparent);
+  box-shadow: 0 0 1.25rem color-mix(in srgb, var(--page-accent) 25%, transparent);
+}
+
+.portal:hover::before,
+.portal:focus-visible::before,
+.portal:active::before {
+  opacity: 1;
+}
+
+.portal:active { transform: scale(0.98); }
+
+.portal:focus-visible {
+  outline: 2px solid var(--page-accent);
+  outline-offset: 3px;
+}
+
+/* Ícone desenhado em linha, na cor do portal, dentro de um círculo */
+.portal-icone {
+  position: relative;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--page-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--page-accent) 35%, transparent);
+  color: var(--page-accent);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--page-accent) 50%, transparent));
+  transition: transform 0.3s ease;
+}
+
+.portal-icone .cheio {
+  fill: currentColor;
+  stroke: none;
+}
+
+.portal:hover .portal-icone { transform: scale(1.08); }
+
+.portal-texto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.portal-nome {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.portal-descricao {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.35;
+}
+
+.rodape {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+
+/* Mais largo, ou o celular deitado: duas colunas */
+@media (min-width: 40em) {
+  .portais {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .portal-primeiro-encontro { grid-column: span 2; }
+}
+
+/* Celular deitado: pouca altura, tudo mais junto para caber */
+@media (orientation: landscape) and (max-height: 30em) {
+  .inicio {
+    padding-top: 1.25rem;
+    gap: 1rem;
+  }
+  .abertura .titulo-brilho { margin-bottom: 0.5rem; }
+  .decor-line { margin-bottom: 0.5rem; }
+  .portal { min-height: 3.75rem; padding: 0.6rem 1rem; }
+  .portal-icone { width: 2.5rem; height: 2.5rem; padding: 0.5rem; }
+}
+
+/* Computador: três colunas, portais mais altos */
+@media (min-width: 64em) and (min-height: 36em) {
+  .portais {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .portal {
+    min-height: 7rem;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+  .portal:hover { transform: translateY(-0.25rem); }
+  .portal-icone { width: 3.5rem; height: 3.5rem; padding: 0.7rem; }
+  .portal-nome { font-size: 1.2rem; }
+  .portal-descricao { font-size: 0.9rem; }
+}

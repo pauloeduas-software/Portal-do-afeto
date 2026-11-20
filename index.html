@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+  <meta name="color-scheme" content="dark">
+  <script src="comum/escuro-forcado.js"></script>
+  <title>✧ Portal do Afeto ✧</title>
+  <!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+  <link rel="icon" href="comum/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="comum/icone-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Base visual compartilhada: reset, navegação, corações -->
+  <link rel="stylesheet" href="comum/estilo.css">
+  <!-- Estilos únicos da página inicial -->
+  <link rel="stylesheet" href="inicio.css">
+</head>
+<body>
+
+  <!-- O redemoinho atrás do título (inicio.js) -->
+  <canvas id="ceu" class="ceu" aria-hidden="true"></canvas>
+
+  <main class="inicio">
+    <header class="abertura">
+      <h1 class="titulo-brilho">Portal do Afeto</h1>
+      <div class="decor-line"></div>
+      <p class="convite">Cada portal guarda um jeito de dizer que eu te amo</p>
+    </header>
+
+    <nav class="portais" aria-label="Portais">
+      <a href="Primeiro-Encontro/" class="portal portal-primeiro-encontro">
+        <svg class="portal-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="cheio" cx="3.5" cy="20.5" r="1"/>
+          <circle class="cheio" cx="6.5" cy="18" r="1"/>
+          <circle class="cheio" cx="9.5" cy="16.5" r="1"/>
+          <circle class="cheio" cx="12.5" cy="14.5" r="1"/>
+          <path d="M17 13.5c-3-2-4.5-3.7-4.5-5.2a2.2 2.2 0 0 1 4.5-.9 2.2 2.2 0 0 1 4.5.9c0 1.5-1.5 3.2-4.5 5.2z"/>
+        </svg>
+        <span class="portal-texto">
+          <span class="portal-nome">Primeiro Encontro</span>
+          <span class="portal-descricao">O caminho daquela noite, parada por parada</span>
+        </span>
+      </a>
+
+      <a href="Chuva-de-Coracoes/" class="portal portal-chuva-de-coracoes">
+        <svg class="portal-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 13c-4-2.6-6-4.8-6-6.8a3 3 0 0 1 6-1.2 3 3 0 0 1 6 1.2c0 2-2 4.2-6 6.8z"/>
+          <path d="M6 16l-1 2.5M12 17l-1 2.5M18 16l-1 2.5"/>
+        </svg>
+        <span class="portal-texto">
+          <span class="portal-nome">Chuva de Corações</span>
+          <span class="portal-descricao">Faça chover até o amor não caber na tela</span>
+        </span>
+      </a>
+
+      <a href="Constelacao/" class="portal portal-constelacao">
+        <svg class="portal-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 17L9 8.5l5 4L20 5M14 12.5l3 6.5"/>
+          <circle class="cheio" cx="4" cy="17" r="1.3"/>
+          <circle class="cheio" cx="9" cy="8.5" r="1.3"/>
+          <circle class="cheio" cx="14" cy="12.5" r="1.6"/>
+          <circle class="cheio" cx="20" cy="5" r="1.3"/>
+          <circle class="cheio" cx="17" cy="19" r="1.3"/>
+        </svg>
+        <span class="portal-texto">
+          <span class="portal-nome">Constelação</span>
+          <span class="portal-descricao">Cada toque acende uma estrela e um elogio</span>
+        </span>
+      </a>
+
+      <a href="Volta-ao-Mundo/" class="portal portal-volta-ao-mundo">
+        <svg class="portal-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <ellipse cx="12" cy="12" rx="3.8" ry="9"/>
+          <path d="M3 12h18M4.6 7.5h14.8M4.6 16.5h14.8"/>
+        </svg>
+        <span class="portal-texto">
+          <span class="portal-nome">Volta ao Mundo</span>
+          <span class="portal-descricao">Um eu te amo em cada canto do mundo</span>
+        </span>
+      </a>
+
+      <a href="Um-Pedido/" class="portal portal-um-pedido">
+        <svg class="portal-icone" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="15" r="6"/>
+          <path d="M9.5 6L12 9l2.5-3L13 4h-2z"/>
+        </svg>
+        <span class="portal-texto">
+          <span class="portal-nome">Um Pedido</span>
+          <span class="portal-descricao">Uma pergunta muito importante…</span>
+        </span>
+      </a>
+    </nav>
+
+    <footer class="rodape">Feito com todo o amor do mundo</footer>
+  </main>
+
+  <!-- Script global de interação -->
+  <script type="module" src="comum/toque.js"></script>
+  <!-- Script local: o redemoinho do fundo -->
+  <script type="module" src="inicio.js"></script>
+</body>
+</html>

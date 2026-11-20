@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+  <meta name="color-scheme" content="dark">
+  <script src="../comum/escuro-forcado.js"></script>
+  <title>✧ Constelação ✧</title>
+  <!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+  <link rel="icon" href="../comum/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../comum/icone-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Base visual compartilhada: reset, gradiente, estrelas, navegação, corações -->
+  <link rel="stylesheet" href="../comum/estilo.css">
+  <!-- Estilos únicos desta página -->
+  <link rel="stylesheet" href="constelacao.css">
+</head>
+<body id="page-body" class="com-frase" data-toque="so-no-topo">
+
+  <nav class="top-nav glass">
+    <a href="../index.html" class="back-link">
+      <span class="back-icon">←</span> Voltar
+    </a>
+    <div class="acoes-topo">
+      <span id="contador" class="contador"></span>
+      <button id="recomecar" class="settings-btn recomecar">
+        <span aria-hidden="true">✦</span> <span class="rotulo">Desenhar outra</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Estrelas e linhas da constelação são desenhadas aqui (js/ceu.js) -->
+  <canvas id="ceu" class="ceu" aria-hidden="true"></canvas>
+
+  <main class="content-viewport">
+    <div class="compliment-stage">
+      <div class="typography-reveal">
+        <h1 id="compliment-text" class="titulo-brilho troca" aria-live="polite">Cada toque acende uma estrela.</h1>
+        <div class="decor-line"></div>
+        <p class="aviso-toque"><span id="aviso-texto" class="troca">Dê um toque na tela para começar</span></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Constelação pronta: o nome em cima e o elogio relido embaixo -->
+  <div id="titulo-final" class="titulo-final">
+    <h2 id="nome-constelacao" class="titulo-brilho nome-constelacao"></h2>
+  </div>
+  <div id="releitura" class="releitura">
+    <p id="releitura-texto" class="troca" aria-live="polite"><span class="aviso-toque">Toque numa estrela para reler o elogio</span></p>
+  </div>
+
+  <!-- Script global de interação -->
+  <script type="module" src="../comum/toque.js"></script>
+  <!-- Script local: a constelação -->
+  <script type="module" src="constelacao.js"></script>
+</body>
+</html>

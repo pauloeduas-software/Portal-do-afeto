@@ -1,0 +1,50 @@
+# ================================================================
+# site.yml — Verifica o site e publica no GitHub Pages 💖
+# Em todo push e pull request: confere sintaxe dos JS e se todo
+# arquivo citado existe. Só no push para a main, e só se a
+# verificação passar, publica no GitHub Pages.
+# ================================================================
+
+name: Site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Sintaxe dos JS e arquivos citados
+        run: node .github/scripts/verificar.mjs
+
+  publicar:
+    needs: verificar
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Uma publicação por vez; a mais nova substitui a que estiver na fila.
+    # Só neste job: a verificação de um PR não pode tomar o lugar de um deploy
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # O site é estático: publica a pasta inteira (.git e .github ficam de fora)
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4

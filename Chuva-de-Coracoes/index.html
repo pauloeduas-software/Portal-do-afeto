@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+  <meta name="color-scheme" content="dark">
+  <script src="../comum/escuro-forcado.js"></script>
+  <title>✧ Chuva de Corações ✧</title>
+  <!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+  <link rel="icon" href="../comum/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../comum/icone-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Base visual compartilhada: reset, gradiente, estrelas, navegação, corações -->
+  <link rel="stylesheet" href="../comum/estilo.css">
+  <!-- Estilos únicos desta página -->
+  <link rel="stylesheet" href="chuva-de-coracoes.css">
+</head>
+<body id="page-body" class="com-frase">
+
+  <nav class="top-nav glass">
+    <a href="../index.html" class="back-link">
+      <span class="back-icon">←</span> Voltar
+    </a>
+    <div class="acoes-topo">
+      <button id="rain-btn" class="settings-btn" aria-pressed="false">
+        <span class="icone" aria-hidden="true">🌧️</span> <span class="rotulo">Iniciar Chuva de Amor</span>
+      </button>
+      <button id="settings-toggle" class="settings-btn" aria-expanded="false" aria-controls="settings-panel">
+        <span aria-hidden="true">❆</span> <span class="rotulo">Configurações</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Céu de nuvens rosadas atrás de tudo (js/ceu.js) -->
+  <canvas id="ceu" class="ceu" aria-hidden="true"></canvas>
+
+  <div id="mensagem-inicial" class="hero-msg">
+    <div class="typography-reveal">
+      <h1 class="titulo-brilho">Transforme o clique em Corações</h1>
+      <div class="decor-line"></div>
+      <p class="aviso-toque">Dê um toque na tela para começar</p>
+    </div>
+  </div>
+
+  <!-- Chuva, pilha e coração grande são desenhados aqui (js/palco.js) -->
+  <canvas id="palco" class="palco" aria-hidden="true"></canvas>
+
+  <!-- Aparece por cima da pilha quando ela enche, com o aviso do toque que junta -->
+  <div id="frase-pilha" class="frase-pilha" aria-live="polite">
+    <p class="titulo-brilho frase-texto">Meu amor por você não cabe na tela</p>
+    <div class="decor-line"></div>
+    <p class="aviso-toque">Dê um toque para juntar os corações</p>
+  </div>
+
+  <!-- Coração grande formado: o aviso do toque que explode -->
+  <p id="aviso-explodir" class="aviso-explodir" aria-live="polite">
+    <span class="aviso-toque">Dê mais um toque para explodir</span>
+  </p>
+
+  <div id="settings-panel" class="settings-panel glass" inert>
+    <h3>Design dos Corações</h3>
+    <div class="style-selector">
+       <button class="style-btn active" data-heart="random" aria-pressed="true">Aleatório</button>
+       <button class="style-btn" data-heart="♡" aria-pressed="false">Contorno (♡)</button>
+       <button class="style-btn" data-heart="♥︎" aria-pressed="false">Preenchido (♥︎)</button>
+    </div>
+  </div>
+
+  <!-- Script global de interação -->
+  <script type="module" src="../comum/toque.js"></script>
+  <!-- Script local: painel de estilos e Chuva de Amor -->
+  <script type="module" src="chuva-de-coracoes.js"></script>
+</body>
+</html>

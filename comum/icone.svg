@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 8 48 48">
+  <!-- Ícone do site: só o coração no degradê das cores dos portais, sem fundo, para assentar na aba de qualquer navegador -->
+  <defs>
+    <linearGradient id="cor" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="0.5" stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 53 C15 41 9 32 9 23.5 C9 16.5 14.5 11 21 11 C25.6 11 29.6 13.6 32 17.5 C34.4 13.6 38.4 11 43 11 C49.5 11 55 16.5 55 23.5 C55 32 49 41 32 53 Z" fill="url(#cor)"/>
+</svg>

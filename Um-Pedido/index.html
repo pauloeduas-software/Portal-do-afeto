@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+  <meta name="color-scheme" content="dark">
+  <script src="../comum/escuro-forcado.js"></script>
+  <title>✧ Um Pedido ✧</title>
+  <!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+  <link rel="icon" href="../comum/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../comum/icone-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Base visual compartilhada: reset, navegação, corações -->
+  <link rel="stylesheet" href="../comum/estilo.css">
+  <!-- Estilos únicos desta página -->
+  <link rel="stylesheet" href="um-pedido.css">
+</head>
+<body id="page-body">
+
+  <nav class="top-nav glass">
+    <a href="../index.html" class="back-link">
+      <span class="back-icon">←</span> Voltar
+    </a>
+  </nav>
+
+  <!-- Pétalas caindo atrás de tudo (js/petalas.js) -->
+  <canvas id="fundo" class="ceu" aria-hidden="true"></canvas>
+
+  <main class="content-viewport">
+    <div class="pedido-stage">
+      <div class="typography-reveal" id="reveal-container">
+        <h1 id="question-text" class="titulo-brilho troca">Quer namorar comigo?</h1>
+        <div class="decor-line"></div>
+        <div class="button-wrapper" id="button-wrapper">
+          <button class="yes-btn">Sim</button>
+          <button class="no-btn" tabindex="-1">Não</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script global de interação -->
+  <script type="module" src="../comum/toque.js"></script>
+  <!-- Script local: lógica de Um Pedido -->
+  <script src="um-pedido.js"></script>
+  <!-- Script local: as pétalas do fundo -->
+  <script type="module" src="js/petalas.js"></script>
+</body>
+</html>

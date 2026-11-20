@@ -1,0 +1,116 @@
+/* ================================================================
+   Primeiro-Encontro/primeiro-encontro.css — Identidade Visual: Primeiro Encontro 🗺️
+   Importa ../comum/estilo.css pela tag HTML. Aqui ficam apenas os estilos
+   únicos desta página; o céu (.ceu), o título (.titulo-brilho) e o
+   aviso de toque (.aviso-toque) são os de ../comum/estilo.css.
+   ================================================================ */
+
+/* --- Identidade de cor desta página --- */
+:root {
+  --page-accent: #f97316;  /* laranja vibrante — o calor do encontro */
+}
+
+/* A página é uma tela só, sem rolagem */
+body {
+  overflow: hidden;
+  /* No iPhone, sem a mãozinha o toque na tela não gera "click" e a frase não avança */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;   /* sem o realce cinza a cada toque */
+}
+
+/* Aqui o fundo é a noite do canvas: sem o gradiente e a grade de
+   estrelas que as outras páginas usam */
+body::before,
+body::after {
+  display: none;
+}
+
+/* Frase na tela: o caminho e a noite escurecem para o texto aparecer */
+.com-frase .ceu {
+  filter: brightness(0.35);
+}
+
+/* --- Frase no meio, por cima do caminho ---
+   Sem caixa atrás: quem escurece é o fundo (.com-frase). Centrada no
+   espaço abaixo do header, como o coração (js/coracao.js). Escondida,
+   sai também do leitor de tela (visibility) */
+.mensagem {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem clamp(1rem, 5vw, 4rem);
+  padding-top: calc(max(3.75rem, 8vh) + 1rem);   /* abaixo da barra fixa */
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0.8s;
+}
+
+.mensagem.visivel {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s;
+}
+
+.typography-reveal {
+  width: 100%;
+  max-width: min(900px, 90vw);
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes loadFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#frase {
+  margin-bottom: 1.5rem;
+}
+
+/* A linha de baixo de cada frase, com o detalhe do momento */
+.frase-sub {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin: -0.5rem 0 1.5rem;
+}
+
+.decor-line {
+  width: min(3.75rem, 15vw);
+  height: 0.2rem;
+  background: var(--page-accent);
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0.625rem var(--page-accent);
+}
+
+/* No header: há quantos dias foi o primeiro encontro */
+.contador {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 48em) {
+  .top-nav { padding: 0 1rem; }
+  /* Menos espaço entre as letras: a frase inteira cabe ao lado do "Voltar" */
+  .contador { letter-spacing: 0.05em; }
+}
+
+/* Celular deitado: pouca altura abaixo da barra — aperta os espaçamentos */
+@media (max-height: 30em) {
+  #frase      { margin-bottom: 1rem; }
+  .frase-sub  { margin-bottom: 1rem; }
+  .decor-line { margin-bottom: 1rem; }
+}

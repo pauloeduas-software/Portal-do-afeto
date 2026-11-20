@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- O site já é escuro: avisa o navegador para não escurecer por cima no modo escuro forçado -->
+  <meta name="color-scheme" content="dark">
+  <script src="../comum/escuro-forcado.js"></script>
+  <title>✧ Volta ao Mundo ✧</title>
+  <!-- Ícone: SVG nas abas; PNG para a tela inicial do iPhone, que não aceita SVG -->
+  <link rel="icon" href="../comum/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../comum/icone-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Base visual compartilhada: reset, gradiente, estrelas, navegação, corações -->
+  <link rel="stylesheet" href="../comum/estilo.css">
+  <!-- Estilos únicos desta página -->
+  <link rel="stylesheet" href="volta-ao-mundo.css">
+</head>
+<body id="page-body" class="com-frase">
+
+  <nav class="top-nav glass">
+    <a href="../index.html" class="back-link">
+      <span class="back-icon">←</span> Voltar
+    </a>
+    <div class="acoes-topo">
+      <button id="settings-toggle" class="settings-btn" aria-expanded="false" aria-controls="settings-panel">
+        <span aria-hidden="true">❆</span> <span class="rotulo">Configurações</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- O globo de pontinhos e, por cima, as luzes dos idiomas (js/globo.js) -->
+  <canvas id="ceu" class="ceu" aria-hidden="true"></canvas>
+  <canvas id="luzes" class="ceu" aria-hidden="true"></canvas>
+  <!-- Só marca onde o globo cabe; o tamanho muda com a tela (volta-ao-mundo.css) -->
+  <div class="lugar-globo" aria-hidden="true"></div>
+
+  <!-- Abertura, como no Encontro: o globo gira escurecido atrás dela e
+       o primeiro toque o acende (.com-frase no body) -->
+  <div id="abertura" class="abertura visivel">
+    <div class="typography-reveal">
+      <h2 class="titulo-brilho">Cada canto do mundo<br>tem um jeito de dizer...</h2>
+      <div class="decor-line"></div>
+      <p class="aviso-toque">Dê um toque na tela para descobrir</p>
+    </div>
+  </div>
+
+  <main class="content-viewport">
+    <div class="love-stage">
+      <div class="typography-reveal" aria-live="polite">
+        <h1 id="frase" class="titulo-brilho troca">Eu te amo</h1>
+        <div class="decor-line"></div>
+        <p id="pronuncia" class="pronuncia troca"></p>
+        <p id="idioma" class="idioma troca">Português</p>
+        <p class="aviso-toque">Toque num país ou fora do mundo</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="settings-panel" class="settings-panel glass" inert>
+    <h3>Ordem</h3>
+    <div class="style-selector">
+      <button class="style-btn active" data-ordem="familiar" aria-pressed="true">Mais conhecidas</button>
+      <button class="style-btn" data-ordem="aleatoria" aria-pressed="false">Aleatória</button>
+    </div>
+  </div>
+
+  <!-- Script global de interação -->
+  <script type="module" src="../comum/toque.js"></script>
+  <!-- Script local: as frases, o globo e o painel -->
+  <script type="module" src="volta-ao-mundo.js"></script>
+</body>
+</html>

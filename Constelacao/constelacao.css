@@ -1,0 +1,194 @@
+/* ================================================================
+   Constelacao/constelacao.css — Identidade Visual: Constelação ✨
+   Importa ../comum/estilo.css pela tag HTML. Aqui ficam apenas os estilos
+   únicos desta página; o céu (.ceu), o título (.titulo-brilho) e o
+   aviso de toque (.aviso-toque) são os de ../comum/estilo.css.
+   ================================================================ */
+
+/* --- Identidade de cor desta página --- */
+:root {
+  --page-accent:  #06b6d4;  /* ciano — frescor e elegância */
+  --cor-nebulosa: #a855f7;  /* lilás das nuvens do céu (js/fundo.js) */
+}
+
+/* A página é uma tela só, sem rolagem */
+body {
+  overflow: hidden;
+  /* No iPhone, sem a mãozinha o toque na tela não gera "click" e o elogio não avança */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;   /* sem o realce cinza a cada toque */
+}
+
+/* Aqui o fundo é o céu estrelado do canvas: sem o gradiente e a grade
+   de estrelas que as outras páginas usam */
+body::before,
+body::after {
+  display: none;
+}
+
+/* Abertura, como no Encontro: o céu escurecido até o primeiro toque */
+.com-frase .ceu {
+  filter: brightness(0.35);
+}
+
+/* --- Conteúdo Principal --- */
+.content-viewport {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;    /* altura visível no celular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 4rem);
+  /* Reserva o espaço da barra fixa de navegação */
+  padding-top: calc(max(3.75rem, 8vh) + 1rem);
+}
+
+.compliment-stage {
+  width: 100%;
+  max-width: min(900px, 90vw);
+  position: relative;
+  transition: opacity 0.8s ease;
+}
+
+/* Constelação pronta: o elogio do meio some e o céu fica livre */
+.constelacao-pronta .compliment-stage { opacity: 0; }
+
+.typography-reveal {
+  text-align: center;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(2vh);
+  animation: loadFadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes loadFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#compliment-text {
+  margin-bottom: 1.5rem;
+}
+
+/* Troca de texto (constelacao.js): some em 0.3s e o novo surge crescendo em
+   0.8s, como a frase da pilha nos Corações */
+.troca {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+span.troca { display: inline-block; }
+
+.troca.trocando {
+  opacity: 0;
+  transform: scale(0.95);
+  transition-duration: 0.3s;
+}
+
+.decor-line {
+  width: min(3.75rem, 15vw);
+  height: 0.2rem;
+  background: var(--page-accent);
+  margin: 0 auto 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0.625rem var(--page-accent);
+}
+
+/* --- Constelação pronta: nome em cima, releitura embaixo ---
+   Só a opacidade anima: o js mede os dois para encaixar o desenho.
+   Escondidos, saem também do leitor de tela (visibility) */
+.titulo-final,
+.releitura {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0 1.5rem;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s ease, visibility 0s 0.8s;
+}
+
+.constelacao-pronta .titulo-final,
+.constelacao-pronta .releitura {
+  opacity: 1;
+  visibility: visible;
+  /* depois que a constelação chega ao meio */
+  transition: opacity 0.8s ease 1.2s, visibility 0s 1.2s;
+}
+
+.titulo-final {
+  top: calc(max(3.75rem, 8vh) + 1rem);
+}
+
+.nome-constelacao {
+  font-size: clamp(1.5rem, 5vw, 2.75rem);
+}
+
+/* Altura fixa: o elogio relido pode ter duas linhas sem mexer no desenho */
+.releitura {
+  bottom: 0.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#releitura-texto.lendo {
+  font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* --- Barra de cima: contador de estrelas e "Desenhar outra" ---
+   Os dois ocupam o mesmo lugar: o contador enquanto ela desenha, o
+   botão com a constelação pronta. Juntos, quebrariam a barra no celular */
+.acoes-topo {
+  display: grid;
+  justify-items: end;
+}
+
+.acoes-topo > * { grid-area: 1 / 1; }
+
+.contador {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  transition: opacity 0.8s ease;
+}
+
+.constelacao-pronta .contador { opacity: 0; }
+
+/* Só aparece com a constelação pronta; escondido, não recebe toque nem Tab */
+.recomecar {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.8s ease, visibility 0s 0.8s;
+}
+
+.constelacao-pronta .recomecar {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.8s ease 1.2s, visibility 0s 1.2s;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 48em) {
+  .top-nav { padding: 0 1rem; }
+}
+
+/* Celular deitado: pouca altura abaixo da barra — aperta os espaçamentos */
+@media (max-height: 30em) {
+  #compliment-text { margin-bottom: 1rem; }
+  .decor-line      { margin-bottom: 1rem; }
+
+  /* Sobra mais altura para a constelação */
+  .titulo-final      { top: calc(max(3.75rem, 8vh) + 0.5rem); }
+  .nome-constelacao  { font-size: 1.25rem; }
+  .releitura         { height: 3.5rem; bottom: 0.25rem; }
+}
